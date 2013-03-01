@@ -1,10 +1,10 @@
 {
   "name": "jsonrpc-serializer",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A simple library to serialize/deserialize JSON-RPC 2.0 messages",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha -u bdd -R spec test/*.test.js "
   },
   "repository": {
     "type": "git",
@@ -16,6 +16,9 @@
     "json-rpc",
     "jsonrpc2"
   ],
+  "engine": {
+    "node":"0.8.x"
+  },
   "author": "Ruben LZ Tan",
   "license": "MIT",
   "dependencies": {
