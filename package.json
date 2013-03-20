@@ -4,7 +4,7 @@
   "description": "A simple library to serialize/deserialize JSON-RPC 2.0 messages",
   "main": "lib/serializer.js",
   "scripts": {
-    "test": "mocha -u bdd -R spec test/*.test.js "
+    "test": "mocha -u bdd -R spec test/serializer.test"
   },
   "repository": {
     "type": "git",

@@ -22,11 +22,23 @@ describe('# Serializer Test Suite', function () {
             var result3 = ser.request('id', 'method', ['param1', 'param2']);
             var result4 = ser.request('id', 'method', { param : 'foo' });
 
+            var object1 = ser.requestObject('id', 'method');
+            var object2 = ser.requestObject('id', 'method', 'params');
+            var object3 = ser.requestObject('id', 'method', ['param1', 'param2']);
+            var object4 = ser.requestObject('id', 'method', { param : 'foo' });
+
             it('should return a serialized string', function () {
                 result1.should.be.a('string');
                 result2.should.be.a('string');
                 result3.should.be.a('string');
                 result4.should.be.a('string');
+            });
+
+            it('requestObject() should return a equivalent object', function() {
+                JSON.parse(result1).should.eql.object1;
+                JSON.parse(result2).should.eql.object2;
+                JSON.parse(result3).should.eql.object3;
+                JSON.parse(result4).should.eql.object4;
             });
         });
     });
@@ -47,11 +59,23 @@ describe('# Serializer Test Suite', function () {
             var result3 = ser.notification('method', ['param1', 'param2']);
             var result4 = ser.notification('method', { param : 'foo' });
 
+            var object1 = ser.notificationObject('method');
+            var object2 = ser.notificationObject('method', 'params');
+            var object3 = ser.notificationObject('method', ['param1', 'param2']);
+            var object4 = ser.notificationObject('method', { param : 'foo' });
+
             it('should return a serialized string', function () {
                 result1.should.be.a('string');
                 result2.should.be.a('string');
                 result3.should.be.a('string');
                 result4.should.be.a('string');
+            });
+
+            it('notificationObject() should return a equivalent object', function() {
+                JSON.parse(result1).should.eql.object1;
+                JSON.parse(result2).should.eql.object2;
+                JSON.parse(result3).should.eql.object3;
+                JSON.parse(result4).should.eql.object4;
             });
         });
     });
@@ -69,10 +93,16 @@ describe('# Serializer Test Suite', function () {
 
         describe('for valid parameters', function () {
             var result = ser.success('id', 'result');
+            var object = ser.successObject('id', 'result');
 
             it('should return a serialized string', function () {
                 result.should.be.a('string');
             });
+
+            it('successObject() should return a equivalent object', function() {
+                JSON.parse(result).should.eql.object;
+            });
+
         });
     });
 
@@ -100,12 +130,26 @@ describe('# Serializer Test Suite', function () {
             var result4 = ser.error('id', new ser.err.MethodNotFoundError());
             var result5 = ser.error('id', new ser.err.InvalidParamsError());
 
+            var object1 = ser.errorObject('id', new ser.err.JsonRpcError('Crazy error'));
+            var object2 = ser.errorObject('id', new ser.err.ParseError());
+            var object3 = ser.errorObject('id', new ser.err.InvalidRequestError());
+            var object4 = ser.errorObject('id', new ser.err.MethodNotFoundError());
+            var object5 = ser.errorObject('id', new ser.err.InvalidParamsError());
+
             it('should return a serialized string', function () {
                 result1.should.be.a('string');
                 result2.should.be.a('string');
                 result3.should.be.a('string');
                 result4.should.be.a('string');
                 result5.should.be.a('string');
+            });
+
+            it('errorObject() should return a equivalent object', function() {
+                JSON.parse(result1).should.eql.object1;
+                JSON.parse(result2).should.eql.object2;
+                JSON.parse(result3).should.eql.object3;
+                JSON.parse(result4).should.eql.object4;
+                JSON.parse(result5).should.eql.object5;
             });
         });
     });
@@ -133,12 +177,16 @@ describe('# Serializer Test Suite', function () {
             };
 
             var result = ser.deserialize(JSON.stringify(request));
+            var object = ser.deserializeObject(request);
 
             delete request.jsonrpc;
 
             it('should return a request object', function () {
                 result.type.should.eql('request');
                 result.payload.should.eql(request);
+            });
+            it('deserializeObject() should return a equivalent object', function() {
+                result.should.eql.object;
             });
         });
 
@@ -150,12 +198,17 @@ describe('# Serializer Test Suite', function () {
             };
 
             var result = ser.deserialize(JSON.stringify(notification));
+            var object = ser.deserializeObject(notification);
 
             delete notification.jsonrpc;
 
             it('should return a notification object', function () {
                 result.type.should.eql('notification');
                 result.payload.should.eql(notification);
+            });
+
+            it('deserializeObject() should return a equivalent object', function() {
+                result.should.eql.object;
             });
         });
 
@@ -167,12 +220,17 @@ describe('# Serializer Test Suite', function () {
             };
 
             var result = ser.deserialize(JSON.stringify(success));
+            var object = ser.deserializeObject(success);
 
             delete success.jsonrpc;
 
             it('should return a success object', function () {
                 result.type.should.eql('success');
                 result.payload.should.eql(success);
+            });
+
+            it('deserializeObject() should return a equivalent object', function() {
+                result.should.eql.object;
             });
         });
 
@@ -184,13 +242,18 @@ describe('# Serializer Test Suite', function () {
             };
 
             var result = ser.deserialize(JSON.stringify(error));
+            var object = ser.deserializeObject(error);
 
             delete error.jsonrpc;
 
             it('should return a error object', function () {
                 result.type.should.eql('error');
                 result.payload.should.eql(error);
-            }); 
+            });
+
+            it('deserializeObject() should return a equivalent object', function() {
+                result.should.eql.object;
+            });
         });
     });
 });
