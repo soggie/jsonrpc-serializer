@@ -17,7 +17,7 @@
     "jsonrpc2"
   ],
   "engine": {
-    "node": ">0.8.16"
+    "node": ">0.10.0"
   },
   "author": "Ruben LZ Tan",
   "license": "MIT",
