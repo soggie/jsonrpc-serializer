@@ -232,6 +232,29 @@ describe('# Serializer Test Suite', function () {
             it('deserializeObject() should return a equivalent object', function() {
                 result.should.eql.object;
             });
+
+            it('should deserialize a result of false', function() {
+              var success = {
+                  jsonrpc : '2.0',
+                  id      : 'id',
+                  result  : false,
+              };
+              var result = ser.deserialize(JSON.stringify(success));
+              delete success.jsonrpc;
+
+              result.payload.should.eql(success);
+            });
+            it('should deserialize a result of null', function() {
+              var success = {
+                  jsonrpc : '2.0',
+                  id      : 'id',
+                  result  : null,
+              };
+              var result = ser.deserialize(JSON.stringify(success));
+              delete success.jsonrpc;
+
+              result.payload.should.eql(success);
+            });
         });
 
         describe('for error object', function () {
