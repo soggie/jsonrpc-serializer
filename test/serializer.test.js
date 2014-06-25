@@ -1,6 +1,6 @@
 var should, serializer;
 
-should = require('chai').should();
+should = require('should');
 ser    = require('../lib/serializer');
 
 describe('# Serializer Test Suite', function () {
@@ -10,9 +10,9 @@ describe('# Serializer Test Suite', function () {
             var result = ser.request();
 
             it('should return an error object', function () {
-                result.should.be.an('array');
-                result.should.include('An ID must be provided. It must be either a string or an integer (no fractions allowed)');
-                result.should.include('Method should be a string. Received undefined instead');
+                result.should.be.an.Array;
+                result.should.containEql('An ID must be provided. It must be either a string or an integer (no fractions allowed)');
+                result.should.containEql('Method should be a string. Received undefined instead');
             });
         });
 
@@ -28,10 +28,10 @@ describe('# Serializer Test Suite', function () {
             var object4 = ser.requestObject('id', 'method', { param : 'foo' });
 
             it('should return a serialized string', function () {
-                result1.should.be.a('string');
-                result2.should.be.a('string');
-                result3.should.be.a('string');
-                result4.should.be.a('string');
+                result1.should.be.a.String;
+                result2.should.be.a.String;
+                result3.should.be.a.String;
+                result4.should.be.a.String;
             });
 
             it('requestObject() should return a equivalent object', function() {
@@ -48,8 +48,8 @@ describe('# Serializer Test Suite', function () {
             var result = ser.notification();
 
             it('should return an error object', function () {
-                result.should.be.an('array');
-                result.should.include('Method should be a string. Received undefined instead');
+                result.should.be.an.Array;
+                result.should.containEql('Method should be a string. Received undefined instead');
             });
         });
 
@@ -65,10 +65,10 @@ describe('# Serializer Test Suite', function () {
             var object4 = ser.notificationObject('method', { param : 'foo' });
 
             it('should return a serialized string', function () {
-                result1.should.be.a('string');
-                result2.should.be.a('string');
-                result3.should.be.a('string');
-                result4.should.be.a('string');
+                result1.should.be.a.String;
+                result2.should.be.a.String;
+                result3.should.be.a.String;
+                result4.should.be.a.String;
             });
 
             it('notificationObject() should return a equivalent object', function() {
@@ -85,9 +85,9 @@ describe('# Serializer Test Suite', function () {
             var result = ser.success();
 
             it('should return an error object', function () {
-                result.should.be.an('array');
-                result.should.include('An ID must be provided. It must be either a string or an integer (no fractions allowed)');
-                result.should.include('Result must exist for success Response objects');
+                result.should.be.an.Array;
+                result.should.containEql('An ID must be provided. It must be either a string or an integer (no fractions allowed)');
+                result.should.containEql('Result must exist for success Response objects');
             }); 
         });
 
@@ -96,7 +96,7 @@ describe('# Serializer Test Suite', function () {
             var object = ser.successObject('id', 'result');
 
             it('should return a serialized string', function () {
-                result.should.be.a('string');
+                result.should.be.a.String;
             });
 
             it('successObject() should return a equivalent object', function() {
@@ -112,14 +112,14 @@ describe('# Serializer Test Suite', function () {
             var result2 = ser.error('id', {});
 
             it('for 1 - should return an error object', function () {
-                result1.should.be.an('array');
-                result1.should.include('An ID must be provided. It must be either a string or an integer (no fractions allowed)');
-                result1.should.include('Error must be an object conforming to the JSON-RPC 2.0 error object specs');
+                result1.should.be.an.Array;
+                result1.should.containEql('An ID must be provided. It must be either a string or an integer (no fractions allowed)');
+                result1.should.containEql('Error must be an object conforming to the JSON-RPC 2.0 error object specs');
             });
 
             it('for 2 - should return an error object', function () {
-                result2.should.be.an('array');
-                result2.should.include('Error must be an instance of JsonRpcError, or any derivatives of it');
+                result2.should.be.an.Array;
+                result2.should.containEql('Error must be an instance of JsonRpcError, or any derivatives of it');
             });
         });
 
@@ -137,11 +137,11 @@ describe('# Serializer Test Suite', function () {
             var object5 = ser.errorObject('id', new ser.err.InvalidParamsError());
 
             it('should return a serialized string', function () {
-                result1.should.be.a('string');
-                result2.should.be.a('string');
-                result3.should.be.a('string');
-                result4.should.be.a('string');
-                result5.should.be.a('string');
+                result1.should.be.a.String;
+                result2.should.be.a.String;
+                result3.should.be.a.String;
+                result4.should.be.a.String;
+                result5.should.be.a.String;
             });
 
             it('errorObject() should return a equivalent object', function() {

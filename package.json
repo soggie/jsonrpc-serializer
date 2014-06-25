@@ -17,12 +17,11 @@
     "jsonrpc2"
   ],
   "engine": {
-    "node":">0.8.16"
+    "node": ">0.8.16"
   },
   "author": "Ruben LZ Tan",
   "license": "MIT",
   "devDependencies": {
-    "chai": "~1.4.2",
-    "mocha": "~1.8.1"
+    "should": "^4.0.4"
   }
 }
