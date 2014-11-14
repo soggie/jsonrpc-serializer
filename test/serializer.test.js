@@ -129,12 +129,14 @@ describe('# Serializer Test Suite', function () {
             var result3 = ser.error('id', new ser.err.InvalidRequestError());
             var result4 = ser.error('id', new ser.err.MethodNotFoundError());
             var result5 = ser.error('id', new ser.err.InvalidParamsError());
+            var result6 = ser.error(null, new ser.err.JsonRpcError('Null error'));
 
             var object1 = ser.errorObject('id', new ser.err.JsonRpcError('Crazy error'));
             var object2 = ser.errorObject('id', new ser.err.ParseError());
             var object3 = ser.errorObject('id', new ser.err.InvalidRequestError());
             var object4 = ser.errorObject('id', new ser.err.MethodNotFoundError());
             var object5 = ser.errorObject('id', new ser.err.InvalidParamsError());
+            var object6 = ser.errorObject('id', new ser.err.JsonRpcError('Null error'));
 
             it('should return a serialized string', function () {
                 result1.should.be.a('string');
@@ -142,6 +144,7 @@ describe('# Serializer Test Suite', function () {
                 result3.should.be.a('string');
                 result4.should.be.a('string');
                 result5.should.be.a('string');
+                result6.should.be.a('string');
             });
 
             it('errorObject() should return a equivalent object', function() {
@@ -150,6 +153,7 @@ describe('# Serializer Test Suite', function () {
                 JSON.parse(result3).should.eql.object3;
                 JSON.parse(result4).should.eql.object4;
                 JSON.parse(result5).should.eql.object5;
+                JSON.parse(result6).should.eql.object6;
             });
         });
     });
