@@ -39,6 +39,8 @@ It's small. It's simple. And I hope this will be useful to you as well.
 
 The library works on serializing objects to JSON-RPC 2.0 (henceforth known as JR2) messages, and deserializing them back. There are 4 different kinds of objects that can be serialized: `request`, `notification`, `success` and `error` ([JSON-RPC 2.0 Specs](http://www.jsonrpc.org/specification)).
 
+* [`request(id, method, [params])`](#jrsrequest-id-method-params-)
+
 ----
 
 ### `jrs.request( id, method, params )`
