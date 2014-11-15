@@ -39,20 +39,81 @@ It's small. It's simple. And I hope this will be useful to you as well.
 
 The library works on serializing objects to JSON-RPC 2.0 (henceforth known as JR2) messages, and deserializing them back. There are 4 different kinds of objects that can be serialized: `request`, `notification`, `success` and `error` ([JSON-RPC 2.0 Specs](http://www.jsonrpc.org/specification)).
 
-### jrs.request( id, method, params ) --> string
+----
 
-Serializes a request message. It takes 3 arguments: `id` which takes a string or integer ID, `method` which takes a string referring to the name of the RPC method to call, and `params` which is optional, but can either be (1) a single value of any type except array or object; (2) an array of params; or (3) a key-value object.
+### `jrs.request( id, method, params )`
 
-* **id** (_required_, _string_ or _integer_) - the ID to attach to this JSON-RPC message
-* **method** (_required_, _string_) - the method to invoke on the server side
-* **params** (_optional_, _string_, _object_ or _array_) - parameters to pass into the method on the server side
+| name | type | required | description |
+|------|------|----------|-------------|
+| id | string or number | YES | the ID to attach to this JSON-RPC message |
+| method | string | YES | the name of the method to invoke on the receiver |
+| params | string, object or array | NO | parameters to pass to the receiver |
+| **return** | string | - | returns a serialized string of a proper JSON-RPC 2.0 request object |
 
-### jrs.notification( method, params ) --> string
+You can use this method to create a JSON-RPC 2.0 request payload to send over the transport of your choice. All you need is to generate an ID for this request, provide a method name to invoke on the receiver side, and parameters to pass over as well.
+
+Here's an example of `request()` in action:
+
+    var jrs = require('jsonrpc-serializer');
+    var uuid = require('node-uuid'); // npm install node-uuid to get this
+
+    var payload = jrs.request(
+        uuid.v4(),   // generates a V4 UUID string
+        'saveUser',  // the method to call
+        {
+            name  : 'Ruben Tan',
+            email : 'foo@bar.com',
+            race  : 'unicorn'
+        }
+    );
+
+    console.log(payload);
+    // This will output the following JSON object as a STRING
+    // {
+    //     "jsonrpc" : "2.0",
+    //     "id" : "0ea77279-b59a-47da-bfa9-21f5895fd28e",
+    //     "method" : "saveUser",
+    //     "params" : {
+    //         "name" : "Ruben Tan",
+    //         "email" : "foo@bar.com",
+    //         "race" : "unicorn"
+    //     }
+    // }
+
+----
+
+### `jrs.notification( method, params )`
+
+| name | type | required | description |
+|------|------|----------|-------------|
+| method | string | YES | the name of the method to invoke on the receiver |
+| params | string, object or array | NO | parameters to pass to the receiver |
+| **return** | string | - | returns a serialized string of a proper JSON-RPC 2.0 notification object |
 
 Serializes a notification message. A notification message is the same as a `request` message, with the only difference being that it does not contain an `id` field, and thus does not expect a reply from the server. This also exempts notifications from receiving errors if any.
 
-* **method** (_required_, _string_) - the method to invoke on the server side
-* **params** (_string_, _object_ or _array_) - parameters to pass into the method on the server side
+    var jrs = require('jsonrpc-serializer');
+
+    var payload = jrs.request(
+        'newMessage',  // the method to call
+        {
+            subject : 'Test message',
+            message : 'This is a test message'
+        }
+    );
+
+    console.log(payload);
+    // This will output the following JSON object as a STRING
+    // {
+    //     "jsonrpc" : "2.0",
+    //     "method" : "newMessage",
+    //     "params" : {
+    //         "subject" : "Test message",
+    //         "message" : "This is a test message"
+    //     }
+    // }
+
+----
 
 ### jrs.success( id, result ) --> string
 
@@ -60,6 +121,8 @@ Serializes a success message. This is usually used on the server side to send re
 
 * **id** (_required_, _string_ or _integer_) - the ID to attach to this JSON-RPC message
 * **result** (_required_, _mixed_) - the results to pass back to the client. This can be anything: number, string, null, boolean, undefined, object, etc
+
+----
 
 ### jrs.error( id, error ) --> string
 
@@ -125,7 +188,7 @@ Since all four of these errors are the same, I'll go through them together. They
     //      data    : ['This is an error']
     //  };
 
-## License
+## MIT License
 
 Copyright (c) 2013 Ruben LZ Tan
 
