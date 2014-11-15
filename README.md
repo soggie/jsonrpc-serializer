@@ -35,7 +35,7 @@ It's small. It's simple. And I hope this will be useful to you as well.
     //      }
     //  }
 
-## That was too fast... can I haz API reference plz?
+## API REFERENCE
 
 The library works on serializing objects to JSON-RPC 2.0 (henceforth known as JR2) messages, and deserializing them back. There are 4 different kinds of objects that can be serialized: `request`, `notification`, `success` and `error` ([JSON-RPC 2.0 Specs](http://www.jsonrpc.org/specification)).
 
@@ -121,16 +121,27 @@ Serializes a notification message. A notification message is the same as a `requ
 
 ----
 
-### jrs.success( id, result ) --> string
+### `jrs.success( id, result )`
+
+| name | type | required | description |
+|------|------|----------|-------------|
+| id | string | YES | the ID of the request to be matched on the server side |
+| result | string, object or array | YES | the result of the JSON-RPC call |
+| **return** | string | - | returns a serialized string of a proper JSON-RPC 2.0 success response |
 
 Serializes a success message. This is usually used on the server side to send results back to the client after receiving the RPC method call. It consists of an `id` and a `result` field.
 
-* **id** (_required_, _string_ or _integer_) - the ID to attach to this JSON-RPC message
-* **result** (_required_, _mixed_) - the results to pass back to the client. This can be anything: number, string, null, boolean, undefined, object, etc
+    Example pending
 
 ----
 
-### jrs.error( id, error ) --> string
+### `jrs.error( id, result )`
+
+| name | type | required | description |
+|------|------|----------|-------------|
+| id | string | YES | the ID of the request to be matched on the server side |
+| error | object | YES | an error object containing the error to be passed to the server side |
+| **return** | string | - | returns a serialized string of a proper JSON-RPC 2.0 error response |
 
 Serializes an error message. This is the same as the success message, except instead of `result` we have `error`. The `error` field MUST be an object, and it MUST conform to the `error` object spec mentioned in the JSON-RPC 2.0 Specs.
 
@@ -139,12 +150,19 @@ See the [specs](http://www.jsonrpc.org/specification) for the exact format for e
 | Namespace | Code | Description |
 |-----------|------|-------------|
 | `jrs.err.JsonRpcError( msg )` | `-32603` | This is the base class for all the other custom RPC error objects. Please note that when integrating this module, make sure to derive from this base class if you want to create more custom errors. This will ensure that all serialization of error objects are consistent. |
-| `jrs.err.ParseError( ... )` | `-32700` | This is thrown when the deserializer fails to recognize the message as a proper JSON entity. |
-| `jrs.err.InvalidRequestError( ... )` | `-32600` | This is thrown when the deserializer successfully parses the message into JSON, but realizes it is not a proper JSON-RPC 2.0 message.
-| `jrs.err.MethodNotFoundError( ... )` | `-32601` | This is what you use when the required method is not found. |
-| `jrs.err.InvalidParamsError( ... )` | `-32602` | This is what you use when the parameters provided is not compatible with the methods being invoked |
+| `jrs.err.ParseError()` | `-32700` | This is thrown when the deserializer fails to recognize the message as a proper JSON entity. |
+| `jrs.err.InvalidRequestError()` | `-32600` | This is thrown when the deserializer successfully parses the message into JSON, but realizes it is not a proper JSON-RPC 2.0 message.
+| `jrs.err.MethodNotFoundError()` | `-32601` | This is what you use when the required method is not found. |
+| `jrs.err.InvalidParamsError()` | `-32602` | This is what you use when the parameters provided is not compatible with the methods being invoked |
 
-### jrs.deserialize( msg ) --> object
+----
+
+### `jrs.deserialize( msg )`
+
+| name | type | required | description |
+|------|------|----------|-------------|
+| msg | string | YES | a serialized JSON |
+| **return** | object | - | returns a deserailized javascript object |
 
 This method takes a message in `msg`, parses it, and tries to figure out which of the four JSON-RPC 2.0 objects it is: `request`, `notification`, `success` or `error`. If it cannot figure out, or the message is faulty, it will instead return an appropriate instance (or child instance) of `JsonRpcError`.
 
@@ -160,7 +178,9 @@ The object returned if successful looks like this:
     
 Where `type` is one of the four types (request, notification, success or error) and `payload` is the actual JSON-RPC message in JSON format itself, with the property `jsonrpc="2.0"` removed.
 
-### jrs.err.JsonRpcError( msg )
+## ERRORS REFERENCE
+
+### `jrs.err.JsonRpcError( msg )`
 
 The message in `msg` is appended to the internal data structure as `message`:
 
@@ -174,13 +194,19 @@ The message in `msg` is appended to the internal data structure as `message`:
     //      data    : ['This is an error']
     //  };
 
-### jrs.err.ParseError( … )
+### `jrs.err.ParseError()`
 
-### jrs.err.InvalidRequestError( … )
+See below
 
-### jrs.err.MethodNotFoundError( ... )
+### `jrs.err.InvalidRequestError()`
 
-### jrs.err.InvalidParamsError( ... )
+See below
+
+### `jrs.err.MethodNotFoundError()`
+
+See below
+
+### `jrs.err.InvalidParamsError()`
 
 Since all four of these errors are the same, I'll go through them together. They are essentially the same format as `JsonRpcError`, with the right `serialize()` method, but the difference is that the `message` property is fixed. Therefore, any params passed in the constructor will be saved into an array inside the `data` property, instead of changing the `message` property itself. Here's an example:
 
