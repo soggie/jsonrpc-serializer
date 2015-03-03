@@ -1,6 +1,6 @@
 {
   "name": "jsonrpc-serializer",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "A simple library to serialize/deserialize JSON-RPC 2.0 messages",
   "main": "lib/serializer.js",
   "scripts": {
