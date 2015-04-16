@@ -192,6 +192,38 @@ describe('# Serializer Test Suite', function () {
             it('deserializeObject() should return a equivalent object', function() {
                 result.should.eql.object;
             });
+
+            it('should deserialize a id of 0', function() {
+                var request = {
+                    jsonrpc : '2.0',
+                    id      : 0,
+                    method  : 'method',
+                    params  : 'params'
+                };
+
+                var result = ser.deserialize(JSON.stringify(request));
+
+                delete request.jsonrpc;
+
+                result.type.should.eql('request');
+                result.payload.should.eql(request);
+            });
+
+            it('should deserialize a id of empty string', function() {
+                var request = {
+                    jsonrpc : '2.0',
+                    id      : '',
+                    method  : 'method',
+                    params  : 'params'
+                };
+
+                var result = ser.deserialize(JSON.stringify(request));
+
+                delete request.jsonrpc;
+
+                result.type.should.eql('request');
+                result.payload.should.eql(request);
+            });
         });
 
         describe('for notification object', function () {
