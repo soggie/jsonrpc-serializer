@@ -246,6 +246,21 @@ describe('# Serializer Test Suite', function () {
             it('deserializeObject() should return a equivalent object', function() {
                 result.should.eql.object;
             });
+
+            it('should deserialize a notification with id of null', function() {
+                var notification = {
+                    jsonrpc : '2.0',
+                    method  : 'method',
+                    params  : 'params',
+                    id      : null
+                };
+
+                var result = ser.deserialize(JSON.stringify(notification));
+
+                delete notification.jsonrpc;
+
+                result.type.should.eql('notification');
+            });
         });
 
         describe('for success object', function () {
