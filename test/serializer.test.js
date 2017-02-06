@@ -260,7 +260,7 @@ test('test deserialization where it should deserialize a result of false', funct
   delete success.jsonrpc
 
   result.payload.should.eql(success)
-  
+
   t.pass()
 })
   
