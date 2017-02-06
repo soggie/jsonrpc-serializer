@@ -4,12 +4,9 @@
   "description": "A simple library to serialize/deserialize JSON-RPC 2.0 messages",
   "main": "lib/serializer.js",
   "scripts": {
-    "test": "mocha -u bdd -R spec test/serializer.test"
+    "test": "node_modules/ava/cli.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/soggie/jsonrpc-serializer.git"
-  },
+  "repository": "git://github.com/soggie/jsonrpc-serializer.git",
   "keywords": [
     "json",
     "jsonrpc",
@@ -17,12 +14,13 @@
     "jsonrpc2"
   ],
   "engine": {
-    "node":">0.8.16"
+    "node": ">0.8.16"
   },
   "author": "Ruben LZ Tan",
   "license": "MIT",
   "devDependencies": {
-    "chai": "~1.4.2",
-    "mocha": "~1.8.1"
-  }
+    "ava": "^0.18.1",
+    "chai": "^3.5.0"
+  },
+  "dependencies": {}
 }
