@@ -1,6 +1,6 @@
 {
   "name": "jsonrpc-serializer",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "A simple library to serialize/deserialize JSON-RPC 2.0 messages",
   "main": "lib/serializer.js",
   "scripts": {
@@ -14,13 +14,16 @@
     "jsonrpc2"
   ],
   "engine": {
-    "node": ">0.8.16"
+    "node": ">6.x.x"
   },
   "author": "Ruben LZ Tan",
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.18.1",
-    "chai": "^3.5.0"
+    "chai": "^3.5.0",
+    "standard": "^8.6.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "inherits": "^2.0.3"
+  }
 }
